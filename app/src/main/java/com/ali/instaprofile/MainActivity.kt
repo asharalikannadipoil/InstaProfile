@@ -19,11 +19,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            InstaProfileTheme {
+//            InstaProfileTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     AppNavigation(modifier = Modifier.padding(innerPadding))
                 }
-            }
+//            }
         }
     }
 }
