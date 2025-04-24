@@ -32,7 +32,7 @@ fun TopAppBar(modifier: Modifier = Modifier) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "username123",
+                text = "Asharali_V_U",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             )
