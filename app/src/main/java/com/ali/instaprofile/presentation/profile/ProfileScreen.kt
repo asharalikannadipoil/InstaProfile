@@ -19,7 +19,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -31,23 +34,53 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.ali.instaprofile.presentation.profile.components.PostsGrid
+import com.ali.instaprofile.presentation.profile.components.ReelsGrid
+import com.ali.instaprofile.presentation.profile.components.TaggedGrid
+import com.ali.instaprofile.presentation.profile.components.TopAppBar
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProfileScreen() {
+    val pagerState = rememberPagerState(pageCount = { 3 })
+    val coroutineScope = rememberCoroutineScope()
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     val lazyListState = rememberLazyListState()
+    val childState = rememberLazyGridState()
+
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val consumed = lazyListState.dispatchRawDelta(-available.y)
+                return Offset(0f, -consumed)
+            }
+
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                val parentConsumed = lazyListState.dispatchRawDelta(-available.y)
+                return Offset(0f, -parentConsumed)
+            }
+        }
+    }
 
     val isScrollingUp by rememberIsScrollingUp(lazyListState)
 
@@ -73,13 +106,29 @@ fun ProfileScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .nestedScroll(nestedScrollConnection)
             ) {
                 item { Spacer(modifier = Modifier.height(56.dp)) }
-                items(100) {
+                items(20) {
                     Text("Item $it")
                 }
-
+                item {
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.Top
+                    ) { page ->
+                        when (page) {
+                            0 -> PostsGrid(childState, nestedScrollConnection)
+                            1 -> ReelsGrid(childState, nestedScrollConnection)
+                            2 -> TaggedGrid(childState, nestedScrollConnection)
+                        }
+                    }
+                }
             }
+        }
+        LaunchedEffect(pagerState.currentPage) {
+            selectedTabIndex = pagerState.currentPage
         }
     }
     TopAppBar(
@@ -90,48 +139,6 @@ fun ProfileScreen() {
     )
 }
 
-@Preview
-@Composable
-fun TopAppBar(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .height(56.dp)
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "username123",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowDown,
-                contentDescription = "Dropdown",
-                modifier = Modifier.size(20.dp)
-            )
-        }
-
-        Row {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Add",
-                modifier = Modifier
-                    .padding(end = 20.dp)
-                    .size(24.dp)
-                    .clickable {  }
-            )
-            Icon(
-                imageVector = Icons.Default.Menu,
-                contentDescription = "Menu",
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable { }
-            )
-        }
-    }
-}
 
 @Composable
 fun rememberIsScrollingUp(lazyListState: LazyListState): State<Boolean> {
