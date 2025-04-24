@@ -49,9 +49,13 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.ali.instaprofile.presentation.profile.components.ActionButtons
+import com.ali.instaprofile.presentation.profile.components.BioSection
 import com.ali.instaprofile.presentation.profile.components.PostsGrid
+import com.ali.instaprofile.presentation.profile.components.ProfileInfo
 import com.ali.instaprofile.presentation.profile.components.ProfileTabs
 import com.ali.instaprofile.presentation.profile.components.ReelsGrid
+import com.ali.instaprofile.presentation.profile.components.StoryHighlights
 import com.ali.instaprofile.presentation.profile.components.TaggedGrid
 import com.ali.instaprofile.presentation.profile.components.TopAppBar
 import kotlinx.coroutines.launch
@@ -110,10 +114,17 @@ fun ProfileScreen() {
                     .weight(1f)
                     .nestedScroll(nestedScrollConnection)
             ) {
+                // Added space for the top bar
                 item { Spacer(modifier = Modifier.height(56.dp)) }
-                items(20) {
-                    Text("Item $it")
-                }
+
+                item { ProfileInfo() }
+
+                item { BioSection() }
+
+                item { ActionButtons() }
+
+                item { StoryHighlights() }
+
                 item {
                     ProfileTabs(
                         selectedTabIndex = selectedTabIndex,
