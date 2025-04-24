@@ -50,9 +50,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.ali.instaprofile.presentation.profile.components.PostsGrid
+import com.ali.instaprofile.presentation.profile.components.ProfileTabs
 import com.ali.instaprofile.presentation.profile.components.ReelsGrid
 import com.ali.instaprofile.presentation.profile.components.TaggedGrid
 import com.ali.instaprofile.presentation.profile.components.TopAppBar
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -112,6 +114,18 @@ fun ProfileScreen() {
                 items(20) {
                     Text("Item $it")
                 }
+                item {
+                    ProfileTabs(
+                        selectedTabIndex = selectedTabIndex,
+                        onTabSelected = { index ->
+                            selectedTabIndex = index
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    )
+                }
+
                 item {
                     HorizontalPager(
                         state = pagerState,
