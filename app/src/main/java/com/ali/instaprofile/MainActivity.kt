@@ -18,12 +18,10 @@ import com.ali.instaprofile.ui.theme.InstaProfileTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             InstaProfileTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val navController = rememberNavController()
-                    AppNavigation(modifier = Modifier.padding(innerPadding), navController = navController)
+                    AppNavigation(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
