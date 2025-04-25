@@ -1,6 +1,7 @@
 # Instagram Profile App
 
-A sample Android application that demonstrates an Instagram profile UI implementation using Jetpack Compose.
+A sample Android application that demonstrates an Instagram profile UI implementation using Jetpack
+Compose.
 
 ## Demo
 
@@ -12,6 +13,7 @@ https://github.com/asharalikannadipoil/InstaProfile/blob/master/recording/video_
 
 <div align="center">
   <img src="screenshots/Screenshot_one.png" alt="Screenshot 1" width="300"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="screenshots/Screenshot_two.png" alt="Screenshot 2" width="300"/>
 </div>
 
