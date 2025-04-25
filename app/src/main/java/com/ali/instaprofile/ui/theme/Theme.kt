@@ -15,8 +15,8 @@ private val DarkColorScheme = darkColorScheme(
     primary = Color.White,
     secondary = Color.White,
     tertiary = Color.Gray,
-    background = Color(0xFF090107),
-    surface = Color(0xFF000000),
+    background = Color.Black,
+    surface =Color.Black,
     onPrimary = Color.Black,
     onSecondary = Color.Black,
     onTertiary = Color.Black,
@@ -28,8 +28,8 @@ private val LightColorScheme = lightColorScheme(
     primary = Color.Black,
     secondary = Color.Black,
     tertiary = Color.Gray,
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFFFF),
+    background = Color.White,
+    surface = Color.White,
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
@@ -40,7 +40,6 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun InstaProfileTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

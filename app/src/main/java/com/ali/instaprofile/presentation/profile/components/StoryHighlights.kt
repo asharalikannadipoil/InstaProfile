@@ -15,7 +15,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,6 +46,7 @@ fun StoryHighlights() {
                 .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            StoryHighlightItemNew()
             repeat(10) { index ->
                 StoryHighlightItem("Story ${index + 1}")
             }
@@ -59,12 +62,16 @@ fun StoryHighlightItem(name: String = "Story 1") {
         modifier = Modifier
             .padding(horizontal = 4.dp)
     ) {
-        Box(modifier = Modifier
-            .border(2.dp, Color.LightGray, CircleShape)
-            .background(Color.Transparent).padding(5.dp)) {
+        Box(
+            modifier = Modifier
+                .border(2.dp, Color.LightGray, CircleShape)
+                .background(Color.Transparent)
+                .padding(5.dp)
+        ) {
             Box(
                 modifier = Modifier
-                    .size(64.dp).clip(CircleShape)
+                    .size(58.dp)
+                    .clip(CircleShape)
                     .background(Color.LightGray.copy(alpha = 0.3f)),
                 contentAlignment = Alignment.Center
             ) {
@@ -82,7 +89,42 @@ fun StoryHighlightItem(name: String = "Story 1") {
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .width(70.dp)
-                .padding(top = 4.dp),
+                .padding(top = 2.dp),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Preview
+@Composable
+fun StoryHighlightItemNew() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(horizontal = 4.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(67.dp).border(1.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
+                .clip(CircleShape)
+                .background(Color.Transparent),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+
+        }
+        Text(
+            text = "New",
+            fontSize = 12.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .width(70.dp)
+                .padding(top = 2.dp),
             textAlign = TextAlign.Center
         )
     }

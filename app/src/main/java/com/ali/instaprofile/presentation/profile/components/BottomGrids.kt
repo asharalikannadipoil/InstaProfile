@@ -15,9 +15,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,7 +40,7 @@ fun PostsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCon
         horizontalArrangement = Arrangement.spacedBy(1.dp),
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
-        items(30) { index ->
+        items(14) { index ->
             GridPostItem(index, type = "post")
         }
     }
@@ -61,7 +59,7 @@ fun ReelsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCon
         horizontalArrangement = Arrangement.spacedBy(1.dp),
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
-        items(24) { index ->
+        items(12) { index ->
             GridPostItem(index, type = "reel")
         }
     }
@@ -90,7 +88,7 @@ fun TaggedGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCo
 fun GridPostItem(index: Int, type: String) {
     Box(
         modifier = Modifier
-            .aspectRatio(if(type == "reel") .8f else 1f)
+            .aspectRatio(if(type == "reel") .7f else .85f)
             .background(
                 when (type) {
                     "post" -> Color.LightGray.copy(alpha = 0.7f)
@@ -124,7 +122,7 @@ fun GridPostItem(index: Int, type: String) {
             )
         }
 
-        when (type) {
+        /*when (type) {
             "reel" -> {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
@@ -162,6 +160,6 @@ fun GridPostItem(index: Int, type: String) {
                     tint = Color.White
                 )
             }
-        }
+        }*/
     }
 }

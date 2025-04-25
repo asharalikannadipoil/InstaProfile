@@ -3,6 +3,7 @@ package com.ali.instaprofile.presentation.profile.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,7 +33,7 @@ fun ActionButtons() {
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         OutlinedButton(
-            onClick = { }, modifier = Modifier.weight(1f), colors = ButtonDefaults.buttonColors(
+            onClick = { }, modifier = Modifier.weight(1f).defaultMinSize(minHeight = 1.dp), colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onBackground
             ), contentPadding = PaddingValues(vertical = 6.dp), shape = RoundedCornerShape(8.dp)
@@ -43,7 +44,7 @@ fun ActionButtons() {
         }
 
         OutlinedButton(
-            onClick = { }, modifier = Modifier.weight(1f), colors = ButtonDefaults.buttonColors(
+            onClick = { }, modifier = Modifier.weight(1f).defaultMinSize(minHeight = 1.dp), colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onBackground
             ), contentPadding = PaddingValues(vertical = 6.dp), shape = RoundedCornerShape(8.dp)
@@ -54,7 +55,7 @@ fun ActionButtons() {
         }
 
         OutlinedButton(
-            onClick = { }, modifier = Modifier.weight(0.3f), colors = ButtonDefaults.buttonColors(
+            onClick = { }, modifier = Modifier.weight(0.25f).defaultMinSize(minHeight = 1.dp), colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onBackground
             ), contentPadding = PaddingValues(vertical = 6.dp), shape = RoundedCornerShape(8.dp)

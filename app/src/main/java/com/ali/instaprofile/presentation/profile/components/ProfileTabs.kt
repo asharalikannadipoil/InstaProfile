@@ -26,8 +26,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfileTabs(selectedTabIndex: Int, onTabSelected: (Int) -> Unit) {
     Column {
-        HorizontalDivider(color = Color.LightGray, thickness = 0.5.dp)
-
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -78,7 +76,9 @@ fun TabItem(
             Icon(
                 imageVector = icon,
                 contentDescription = contentDescription,
-                tint = if (isSelected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onBackground.copy(alpha = .5f)
+                tint = if (isSelected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onBackground.copy(
+                    alpha = .5f
+                )
             )
         }
 
