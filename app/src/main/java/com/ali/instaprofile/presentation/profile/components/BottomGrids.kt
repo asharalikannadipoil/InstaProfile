@@ -41,7 +41,7 @@ fun PostsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCon
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         items(14) { index ->
-            GridPostItem(index, type = "post")
+            GridPostItem(type = "post")
         }
     }
 }
@@ -60,7 +60,7 @@ fun ReelsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCon
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         items(12) { index ->
-            GridPostItem(index, type = "reel")
+            GridPostItem(type = "reel")
         }
     }
 }
@@ -79,13 +79,13 @@ fun TaggedGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCo
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         items(18) { index ->
-            GridPostItem(index, type = "tagged")
+            GridPostItem(type = "tagged")
         }
     }
 }
 
 @Composable
-fun GridPostItem(index: Int, type: String) {
+fun GridPostItem(type: String) {
     Box(
         modifier = Modifier
             .aspectRatio(if(type == "reel") .7f else .85f)
@@ -122,6 +122,7 @@ fun GridPostItem(index: Int, type: String) {
             )
         }
 
+        // Logic for any extra icon  at the top left side
         /*when (type) {
             "reel" -> {
                 Icon(

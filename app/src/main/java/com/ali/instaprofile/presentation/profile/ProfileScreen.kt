@@ -60,6 +60,10 @@ import com.ali.instaprofile.presentation.profile.components.TaggedGrid
 import com.ali.instaprofile.presentation.profile.components.TopAppBar
 import kotlinx.coroutines.launch
 
+/**
+ * Starting of Profile screen
+ * Contains all the scrolling and sticky behaviour of the UI
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProfileScreen() {
@@ -70,6 +74,7 @@ fun ProfileScreen() {
     val lazyListState = rememberLazyListState()
     val childState = rememberLazyGridState()
 
+    // Used to manage the parent scrolling ad grid scrolling
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
@@ -88,6 +93,7 @@ fun ProfileScreen() {
         }
     }
 
+    // state to hide and show top name bar
     val isScrollingUp by rememberIsScrollingUp(lazyListState)
 
     val topBarHeightPx = with(LocalDensity.current) { 56.dp.toPx() }
@@ -106,6 +112,7 @@ fun ProfileScreen() {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
+        // All contents are added from here
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn(
                 state = lazyListState,
@@ -164,11 +171,13 @@ fun ProfileScreen() {
     )
 }
 
-
+/**
+ * Logic for TopAppBar sticky behaviour
+ */
 @Composable
 fun rememberIsScrollingUp(lazyListState: LazyListState): State<Boolean> {
-    val previousScrollOffset = remember { mutableStateOf(0) }
-    val previousItemIndex = remember { mutableStateOf(0) }
+    val previousScrollOffset = remember { mutableIntStateOf(0) }
+    val previousItemIndex = remember { mutableIntStateOf(0) }
     val hasScrolled = remember { mutableStateOf(false) }
 
     return remember {
@@ -177,21 +186,21 @@ fun rememberIsScrollingUp(lazyListState: LazyListState): State<Boolean> {
             val currOffset = lazyListState.firstVisibleItemScrollOffset
 
             val isUp = when {
-                currIndex < previousItemIndex.value -> true
-                currIndex > previousItemIndex.value -> {
+                currIndex < previousItemIndex.intValue -> true
+                currIndex > previousItemIndex.intValue -> {
                     hasScrolled.value = true
                     false
                 }
 
                 else -> {
-                    val scrollingUp = currOffset < previousScrollOffset.value
-                    if (currOffset != previousScrollOffset.value) hasScrolled.value = true
+                    val scrollingUp = currOffset < previousScrollOffset.intValue
+                    if (currOffset != previousScrollOffset.intValue) hasScrolled.value = true
                     scrollingUp
                 }
             }
 
-            previousItemIndex.value = currIndex
-            previousScrollOffset.value = currOffset
+            previousItemIndex.intValue = currIndex
+            previousScrollOffset.intValue = currOffset
 
             if (!hasScrolled.value) true else isUp
         }

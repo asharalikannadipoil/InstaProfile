@@ -17,6 +17,7 @@ fun AppNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
+    // Added NavHost to manage navigation in future
     NavHost(
         navController = navController,
         startDestination = Screen.Profile.route,
