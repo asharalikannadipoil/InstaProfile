@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,7 +26,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfileTabs(selectedTabIndex: Int, onTabSelected: (Int) -> Unit) {
     Column {
-        Divider(color = Color.LightGray, thickness = 0.5.dp)
+        HorizontalDivider(color = Color.LightGray, thickness = 0.5.dp)
 
         Row(
             modifier = Modifier.fillMaxWidth()
@@ -51,7 +54,7 @@ fun ProfileTabs(selectedTabIndex: Int, onTabSelected: (Int) -> Unit) {
             )
         }
 
-        Divider(color = Color.LightGray, thickness = 0.5.dp)
+        HorizontalDivider(color = Color.LightGray, thickness = 0.5.dp)
     }
 }
 
@@ -75,15 +78,15 @@ fun TabItem(
             Icon(
                 imageVector = icon,
                 contentDescription = contentDescription,
-                tint = if (isSelected) Color.Black else Color.Gray
+                tint = if (isSelected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onBackground.copy(alpha = .5f)
             )
         }
 
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .width(50.dp)
                 .height(2.dp)
-                .background(if (isSelected) Color.Black else Color.Transparent)
+                .background(if (isSelected) MaterialTheme.colorScheme.onBackground else Color.Transparent)
         )
     }
 }

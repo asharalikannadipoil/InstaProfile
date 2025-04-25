@@ -37,7 +37,7 @@ fun PostsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCon
         modifier = Modifier
             .nestedScroll(nestedScrollConnection)
             .fillMaxWidth()
-            .height(800.dp), // Set a fixed height that's large enough to be scrollable
+            .height(900.dp), // Set a fixed height that's large enough to be scrollable
         contentPadding = PaddingValues(1.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp),
         verticalArrangement = Arrangement.spacedBy(1.dp)
@@ -56,7 +56,7 @@ fun ReelsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCon
         modifier = Modifier
             .nestedScroll(nestedScrollConnection)
             .fillMaxWidth()
-            .height(800.dp),
+            .height(1300.dp),
         contentPadding = PaddingValues(1.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp),
         verticalArrangement = Arrangement.spacedBy(1.dp)
@@ -75,7 +75,7 @@ fun TaggedGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCo
         modifier = Modifier
             .nestedScroll(nestedScrollConnection)
             .fillMaxWidth()
-            .height(800.dp),
+            .height(900.dp),
         contentPadding = PaddingValues(1.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp),
         verticalArrangement = Arrangement.spacedBy(1.dp)
@@ -90,7 +90,7 @@ fun TaggedGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCo
 fun GridPostItem(index: Int, type: String) {
     Box(
         modifier = Modifier
-            .aspectRatio(1f)
+            .aspectRatio(if(type == "reel") .8f else 1f)
             .background(
                 when (type) {
                     "post" -> Color.LightGray.copy(alpha = 0.7f)
@@ -100,7 +100,7 @@ fun GridPostItem(index: Int, type: String) {
             )
             .clickable { /* Item click action */ }
     ) {
-        // You would use actual images here
+
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -112,7 +112,6 @@ fun GridPostItem(index: Int, type: String) {
                 tint = Color.White
             )
 
-            // Display the type in the center for demonstration
             Text(
                 text = when (type) {
                     "post" -> "Post"
@@ -125,7 +124,6 @@ fun GridPostItem(index: Int, type: String) {
             )
         }
 
-        // Show indicators based on type
         when (type) {
             "reel" -> {
                 Icon(
