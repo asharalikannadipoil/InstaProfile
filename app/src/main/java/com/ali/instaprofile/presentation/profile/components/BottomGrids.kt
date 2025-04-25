@@ -1,5 +1,7 @@
 package com.ali.instaprofile.presentation.profile.components
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
@@ -21,11 +24,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ali.instaprofile.R
 
 @Composable
 fun PostsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollConnection) {
@@ -41,7 +48,7 @@ fun PostsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCon
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         items(14) { index ->
-            GridPostItem(type = "post")
+            GridPostItem(type = "post", index = index)
         }
     }
 }
@@ -60,7 +67,7 @@ fun ReelsGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCon
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         items(12) { index ->
-            GridPostItem(type = "reel")
+            GridPostItem(type = "reel", index = index)
         }
     }
 }
@@ -79,13 +86,13 @@ fun TaggedGrid(childState: LazyGridState, nestedScrollConnection: NestedScrollCo
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         items(18) { index ->
-            GridPostItem(type = "tagged")
+            GridPostItem(type = "tagged", index)
         }
     }
 }
 
 @Composable
-fun GridPostItem(type: String) {
+fun GridPostItem(type: String, index: Int) {
     Box(
         modifier = Modifier
             .aspectRatio(if(type == "reel") .7f else .85f)
@@ -103,23 +110,32 @@ fun GridPostItem(type: String) {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
+            // Commented - For the default item
+           /* Icon(
                 imageVector = Icons.Default.Person,
                 contentDescription = null,
                 modifier = Modifier.size(32.dp),
                 tint = Color.White
             )
 
-            Text(
-                text = when (type) {
-                    "post" -> "Post"
-                    "reel" -> "Reel"
-                    else -> "Tagged"
-                },
-                color = Color.White,
-                fontSize = 12.sp,
-                modifier = Modifier.padding(top = 40.dp)
+             Text(
+                 text = when (type) {
+                     "post" -> "Post"
+                     "reel" -> "Reel"
+                     else -> "Tagged"
+                 },
+                 color = Color.White,
+                 fontSize = 12.sp,
+                 modifier = Modifier.padding(top = 40.dp)
+             )*/
+            Image(
+                painter = painterResource(id = getImageByIndex(index)),
+                contentDescription = "Profile Picture",
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop,
             )
+
         }
 
         // Logic for any extra icon  at the top left side
@@ -164,3 +180,18 @@ fun GridPostItem(type: String) {
         }*/
     }
 }
+
+@DrawableRes
+fun getImageByIndex(index: Int): Int {
+    val item = index % 6
+    return when (item) {
+        1 -> R.drawable.im_1
+        2 -> R.drawable.im_2
+        3 -> R.drawable.im_3
+        4 -> R.drawable.im_4
+        5 -> R.drawable.im_5
+        0 -> R.drawable.im_6
+        else -> R.drawable.im_1 // default fallback
+    }
+}
+
