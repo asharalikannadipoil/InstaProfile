@@ -56,13 +56,22 @@ fun ProfileInfo() {
             }
         }
 
-        Row(
-            modifier = Modifier.weight(7.5f),
-            horizontalArrangement = Arrangement.SpaceEvenly
+        Column(
+            modifier = Modifier.weight(7.5f).padding(horizontal = 10.dp)
         ) {
-            StatColumn("75", "Posts")
-            StatColumn("1.5K", "Followers")
-            StatColumn("1,025", "Following")
+            Text(
+                modifier = Modifier.padding(vertical = 5.dp),
+                text = "Asharali V U",
+                fontSize = 14.sp
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                StatColumn("75", "Posts")
+                StatColumn("1.5K", "Followers")
+                StatColumn("1,025", "Following")
+            }
         }
     }
 }
@@ -71,7 +80,7 @@ fun ProfileInfo() {
 @Composable
 fun StatColumn(count: String = "75", label: String = "Posts") {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.Start,
         modifier = Modifier.clickable { }
     ) {
         Text(
