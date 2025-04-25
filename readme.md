@@ -6,7 +6,7 @@ A sample Android application that demonstrates an Instagram profile UI implement
 
 ### Video Recording
 
-https://github.com/asharalikannadipoil/InstaProfile/blob/main/recording/video_record.webm
+https://github.com/asharalikannadipoil/InstaProfile/blob/master/recording/video_record.webm
 
 ### Screenshots
 
@@ -14,4 +14,9 @@ https://github.com/asharalikannadipoil/InstaProfile/blob/main/recording/video_re
   <img src="screenshots/Screenshot_one.png" alt="Screenshot 1" width="300"/>
   <img src="screenshots/Screenshot_two.png" alt="Screenshot 2" width="300"/>
 </div>
+
+### APK
+
+https://github.com/asharalikannadipoil/InstaProfile/blob/master/APK/app-debug.apk
+
 
