@@ -1,8 +1,5 @@
 package com.ali.instaprofile.presentation.profile
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,18 +10,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -48,6 +42,7 @@ import com.ali.instaprofile.presentation.profile.components.StoryHighlights
 import com.ali.instaprofile.presentation.profile.components.TaggedGrid
 import com.ali.instaprofile.presentation.profile.components.TopAppBar
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 /**
  * Starting of Profile screen
@@ -62,11 +57,20 @@ fun ProfileScreen() {
 
     val lazyListState = rememberLazyListState()
     val childState = rememberLazyGridState()
+    val toolbarOffsetHeightPx = remember { mutableFloatStateOf(0f) }
+    val toolbarHeight = 56.dp
+    val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.toPx() }
 
     // Used to manage the parent scrolling ad grid scrolling
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                // For toolbar
+                val delta = available.y
+                val newOffset = toolbarOffsetHeightPx.floatValue + delta
+                toolbarOffsetHeightPx.floatValue = newOffset.coerceIn(-toolbarHeightPx, 0f)
+
+                // For parent and child
                 val consumed = lazyListState.dispatchRawDelta(-available.y)
                 return Offset(0f, -consumed)
             }
@@ -82,21 +86,6 @@ fun ProfileScreen() {
         }
     }
 
-    // state to hide and show top name bar
-    val isScrollingUp by rememberIsScrollingUp(lazyListState)
-
-    val topBarHeightPx = with(LocalDensity.current) { 56.dp.toPx() }
-    val topBarOffsetHeightPx = remember { Animatable(-topBarHeightPx) }
-
-    LaunchedEffect(isScrollingUp) {
-        topBarOffsetHeightPx.animateTo(
-            targetValue = if (isScrollingUp) 0f else -topBarHeightPx,
-            animationSpec = spring(
-                dampingRatio = Spring.DampingRatioLowBouncy,
-                stiffness = Spring.StiffnessLow
-            )
-        )
-    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -154,44 +143,9 @@ fun ProfileScreen() {
     }
     TopAppBar(
         modifier = Modifier
-            .offset { IntOffset(0, topBarOffsetHeightPx.value.toInt()) }
+            .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.floatValue.roundToInt()) }
             .fillMaxWidth()
+            .height(toolbarHeight)
             .background(Color.White)
     )
-}
-
-/**
- * Logic for TopAppBar sticky behaviour
- */
-@Composable
-fun rememberIsScrollingUp(lazyListState: LazyListState): State<Boolean> {
-    val previousScrollOffset = remember { mutableIntStateOf(0) }
-    val previousItemIndex = remember { mutableIntStateOf(0) }
-    val hasScrolled = remember { mutableStateOf(false) }
-
-    return remember {
-        derivedStateOf {
-            val currIndex = lazyListState.firstVisibleItemIndex
-            val currOffset = lazyListState.firstVisibleItemScrollOffset
-
-            val isUp = when {
-                currIndex < previousItemIndex.intValue -> true
-                currIndex > previousItemIndex.intValue -> {
-                    hasScrolled.value = true
-                    false
-                }
-
-                else -> {
-                    val scrollingUp = currOffset < previousScrollOffset.intValue
-                    if (currOffset != previousScrollOffset.intValue) hasScrolled.value = true
-                    scrollingUp
-                }
-            }
-
-            previousItemIndex.intValue = currIndex
-            previousScrollOffset.intValue = currOffset
-
-            if (!hasScrolled.value) true else isUp
-        }
-    }
 }
