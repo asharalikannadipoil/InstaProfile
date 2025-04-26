@@ -7,7 +7,10 @@ Compose.
 
 ### Video Recording
 
+# With placeholder
 https://github.com/asharalikannadipoil/InstaProfile/blob/master/recording/video_record.webm
+# With dummy images
+https://github.com/asharalikannadipoil/InstaProfile/blob/master/recording/video_record_two.webm
 
 ### Screenshots
 
@@ -27,6 +30,9 @@ https://github.com/asharalikannadipoil/InstaProfile/blob/master/recording/video_
 
 ### APK
 
-https://github.com/asharalikannadipoil/InstaProfile/blob/master/APK/app-debug.apk
+# With dummy images
+https://github.com/asharalikannadipoil/InstaProfile/blob/master/APK/build-two.apk
+# With placeholder 
+https://github.com/asharalikannadipoil/InstaProfile/blob/master/APK/build-one.apk
 
 
